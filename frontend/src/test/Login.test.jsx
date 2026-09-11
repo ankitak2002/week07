@@ -40,7 +40,7 @@ describe("Login page", () => {
 
     expect(
       screen.getByText(
-        "KoalaTech University"
+        "This Text Does Not Exist On The Page"
       )
     ).toBeInTheDocument();
 
