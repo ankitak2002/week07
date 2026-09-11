@@ -40,28 +40,6 @@ jobs:
           - service: enrollment-service
             database: enrollments
             port: 5437
-      
-  frontend-test:
-    name: Test frontend
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: "20"
-
-      - name: Install dependencies
-        working-directory: frontend
-        run: npm ci
-
-      - name: Run tests
-        working-directory: frontend
-        run: npm run test:run
 
     services:
       postgres:
@@ -120,7 +98,27 @@ jobs:
         run: |
           pytest -v
 
+  frontend-test:
+    name: Test frontend
+    runs-on: ubuntu-latest
 
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run tests
+        working-directory: frontend
+        run: npm run test:run
   # =========================================================
   # Build and Push Docker Images
   # =========================================================
@@ -186,3 +184,4 @@ jobs:
         run: |
           docker push \
             ${{ vars.ACR_LOGIN_SERVER }}/${{ matrix.image }}:latest
+
